@@ -37,9 +37,11 @@ const postOne = async(req, res) => {
 
 const deleteOne = async(req, res) => {
     const { id } = req.params
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'data not found'})
+    }
     try {
-        const data = await Workout.findById(id)
-        await Workout.deleteOne({ _id: data._id })
+        const data = await Workout.findOneAndDelete({ _id: id })
         res.status(200).json({
             message: `instance deleted (${data._id})`
         })
@@ -50,11 +52,11 @@ const deleteOne = async(req, res) => {
 
 const editOne = async(req, res) => {
     const { id } = req.params
-    const patchData = req.body
     try {
-        const data = await Workout.findByIdAndUpdate((id),patchData)
-        const updatedData = await Workout.findById(id)
-        res.status(200).json(updatedData)
+        const data = await Workout.findOneAndUpdate({ _id: id }, {
+            ...req.body
+        })
+        res.status(200).json(data)
     } catch (error) {
         res.status(400).json({error: error.message})
     }
