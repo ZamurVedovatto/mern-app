@@ -1,5 +1,6 @@
 
 const Workout = require('./../models/workoutModel')
+const mongoose = require('mongoose')
 
 const getAll = async(req, res) => {
     try {
@@ -12,6 +13,9 @@ const getAll = async(req, res) => {
 
 const getOne = async(req, res) => {
     const { id } = req.params
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'data not found'})
+    }
     try {
         const data = await Workout.findById(id)
         if (!data) res.status(404).json({error: 'data not found'})
