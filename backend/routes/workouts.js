@@ -1,41 +1,65 @@
 const express = require('express')
+const Workout = require('./../models/workoutModel')
 
 const router = express.Router()
 
 // GET ALL
-router.get('/', (req, res) => {
-    res.json({
-        message: "get all workouts"
-    })
+router.get('/', async(req, res) => {
+    try {
+        const data = await Workout.find({})
+        res.status(200).json(data)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 })
 
 // GET ONE
-router.get('/:id', (req, res) => {
-    res.json({
-        message: "get one workout"
-    })
+router.get('/:id', async(req, res) => {
+    const { id } = req.params
+    try {
+        const data = await Workout.findById(id)
+        res.status(200).json(data)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 })
 
 // POST ONE
-router.post('/', (req, res) => {
-    // req.body
-    res.json({
-        message: "post workout"
-    })
+router.post('/', async(req, res) => {
+    const { title, reps, load } = req.body
+    try {
+        const data = await Workout.create({ title, reps, load })
+        res.status(200).json(data)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 })
 
 // DELETE ONE
-router.delete('/', (req, res) => {
-    res.json({
-        message: "delete workout"
-    })
+router.delete('/:id', async(req, res) => {
+    const { id } = req.params
+    try {
+        const data = await Workout.findById(id)
+        await Workout.deleteOne({ _id: data._id })
+        res.status(200).json({
+            message: `instance deleted (${data._id})`
+        })
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 })
 
 // EDIT ONE
-router.patch('/', (req, res) => {
-    res.json({
-        message: "patch workout"
-    })
+router.patch('/:id', async(req, res) => {
+    const { id } = req.params
+    const patchData = req.body
+    try {
+        const data = await Workout.findByIdAndUpdate((id),patchData)
+        const updatedData = await Workout.findById(id)
+        res.status(200).json(updatedData)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 })
 
 module.exports = router
