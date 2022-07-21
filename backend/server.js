@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 
 const PORT = process.env.PORT
 const MONGO_URI = process.env.MONGO_URI
@@ -10,6 +11,7 @@ const workoutRoutes = require('./routes/workouts')
 const app = express()
 
 // middlewares
+app.use(cors())
 app.use(express.json())
 app.use((req, res, next) => {
     console.log(req.path, req.method)
