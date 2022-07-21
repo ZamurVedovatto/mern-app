@@ -26,7 +26,7 @@ function Home() {
                 {workouts && workouts.map((workout, index) => (
                     <WorkoutsDetails key={workout._id} workout={workout} />
                 ))}
-                {!workouts && <p>nothing here</p>}
+                {!workouts.length && <p>nothing here</p>}
             </div>
             <WorkoutForm />
         </div>

@@ -42,9 +42,10 @@ const deleteOne = async(req, res) => {
     }
     try {
         const data = await Workout.findOneAndDelete({ _id: id })
-        res.status(200).json({
-            message: `instance deleted (${data._id})`
-        })
+        res.status(200).json(data);
+        // res.status(200).json({
+        //     message: `instance deleted (${data._id})`
+        // })
     } catch (error) {
         res.status(400).json({error: error.message})
     }
