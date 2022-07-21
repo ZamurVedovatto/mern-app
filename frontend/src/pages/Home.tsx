@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import WorkoutsDetails from './../components/WorkoutsDetais'
+import WorkoutsDetails from './../components/WorkoutsDetails'
+import WorkoutForm from './../components/WorkoutForm'
 
 function Home() {
     const [workouts, setWorkouts] = useState(null)
@@ -21,6 +22,7 @@ function Home() {
                 ))}
                 {!workouts && <p>nothing here</p>}
             </div>
+            <WorkoutForm />
         </div>
     )
 }

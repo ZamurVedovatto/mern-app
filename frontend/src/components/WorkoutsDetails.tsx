@@ -1,4 +1,4 @@
-function WorkoutsDetais({ workout }) {
+function WorkoutsDetails({ workout }) {
     return (
         <div className="workout-details">
             <h4>{workout.title}</h4>
@@ -9,4 +9,4 @@ function WorkoutsDetais({ workout }) {
     )
 }
 
-export default WorkoutsDetais
+export default WorkoutsDetails
