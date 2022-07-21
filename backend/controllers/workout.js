@@ -27,6 +27,13 @@ const getOne = async(req, res) => {
 
 const postOne = async(req, res) => {
     const { title, reps, load } = req.body
+
+    let emptyFields = []
+    if(!title) emptyFields.push('title')
+    if(!reps) emptyFields.push('reps')
+    if(!load) emptyFields.push('load')
+    if(emptyFields.length > 0) return res.status(400).json( { error: 'please fill in all fields', emptyFields })
+
     try {
         const data = await Workout.create({ title, reps, load })
         res.status(200).json(data)
@@ -43,9 +50,6 @@ const deleteOne = async(req, res) => {
     try {
         const data = await Workout.findOneAndDelete({ _id: id })
         res.status(200).json(data);
-        // res.status(200).json({
-        //     message: `instance deleted (${data._id})`
-        // })
     } catch (error) {
         res.status(400).json({error: error.message})
     }
