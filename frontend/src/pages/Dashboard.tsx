@@ -41,6 +41,7 @@ export default function Dashboard() {
     cookies.remove('jwt', { path: '/' })
     navigate("/login");
   };
+  
   return (
     <>
       <div className="private">
