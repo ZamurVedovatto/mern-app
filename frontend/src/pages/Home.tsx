@@ -1,25 +1,22 @@
 import { useEffect } from 'react'
-import WorkoutsDetails from './../components/WorkoutsDetails'
-import WorkoutForm from './../components/WorkoutForm'
-import { useWorkoutsContext } from './../hooks/useWorkoutsContext'
+import ClientDetails from './../components/ClientDetails'
+import ClientForm from './../components/ClientForm'
+import { useClientContext } from './../hooks/useClientContext'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+// import { toast, ToastContainer } from "react-toastify";
 import Cookies from 'universal-cookie';
 
 function Home() {
-    const {workouts, dispatch} = useWorkoutsContext()
+    const {clients, dispatch} = useClientContext()
     const navigate = useNavigate();
     const cookies = new Cookies();
 
     useEffect(() => {
         const verifyUser = async () => {
-            console.log('enrtou aqui 1')
             if (!cookies.get('jwt')) {
-            console.log('enrtou aqui 2')
-            navigate("/login");
+                navigate("/login");
             } else {
-            console.log('enrtou aqui 3')
             const { data } = await axios.post(
                 "http://localhost:3000/api/auth/",
                 {},
@@ -31,9 +28,10 @@ function Home() {
                 cookies.remove('jwt', { path: '/' })
                 navigate("/login");
             } else
-                toast(`Hi ${data.user} 🦄`, {
-                theme: "dark",
-                });
+                // toast(`Hi ${data.user} 🦄`, {
+                //     theme: "dark",
+                // });
+                console.log(data.user)
             }
         };
         verifyUser();
@@ -45,32 +43,32 @@ function Home() {
     };
 
     useEffect(() => {
-        const fetchWorkouts = async () => {
-            const resp = await fetch('http://localhost:3000/api/workouts')
+        const fetchClients = async () => {
+            const resp = await fetch('http://localhost:3000/api/client')
             const json = await resp.json()
             if(resp.ok) {
                 dispatch({
-                    type: 'SET_WORKOUTS',
+                    type: 'SET_CLIENTS',
                     payload: json
                 })
             }
         }
-        fetchWorkouts()
+        fetchClients()
     }, [dispatch])
     
     return (
         <>
             <button onClick={logOut}>Log out</button>
             <div className="home">
-                <div className="workouts">
-                    {workouts && workouts.map((workout, index) => (
-                        <WorkoutsDetails key={workout._id} workout={workout} />
+                <div className="clients">
+                    {clients && clients.map((client, index) => (
+                        <ClientDetails key={client._id} client={client} />
                         ))}
-                    {!workouts?.length && <p>nothing here</p>}
+                    {!clients?.length && <p>Nenhum cliente.</p>}
                 </div>
-                <WorkoutForm />
+                <ClientForm />
             </div>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
         </>
     )
 }

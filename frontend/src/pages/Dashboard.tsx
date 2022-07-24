@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // import { useCookies } from "react-cookie";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+// import { toast, ToastContainer } from "react-toastify";
 import Cookies from 'universal-cookie';
 
 export default function Dashboard() {
@@ -29,10 +29,11 @@ export default function Dashboard() {
           cookies.remove('jwt', { path: '/' })
           navigate("/login");
         } else
-          toast(`Hi ${data.user} 🦄`, {
-            theme: "dark",
-          });
-      }
+          // toast(`Hi ${data.user} 🦄`, {
+          //   theme: "dark",
+          // });
+          console.log(data.user, 'logaado')
+        }
     };
     verifyUser();
   }, [cookies, navigate ]);
@@ -48,7 +49,7 @@ export default function Dashboard() {
         <h1>Super Secret Page</h1>
         <button onClick={logOut}>Log out</button>
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </>
   );
 }
