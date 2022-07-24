@@ -37,11 +37,6 @@ function Home() {
         verifyUser();
     }, [cookies, navigate ]);
 
-    const logOut = () => {
-        cookies.remove('jwt', { path: '/' })
-        navigate("/login");
-    };
-
     useEffect(() => {
         const fetchClients = async () => {
             const resp = await fetch('http://localhost:3000/api/client')
@@ -58,7 +53,6 @@ function Home() {
     
     return (
         <>
-            <button onClick={logOut}>Log out</button>
             <div className="home">
                 <div className="clients">
                     {clients && clients.map((client, index) => (
