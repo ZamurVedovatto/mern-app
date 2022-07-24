@@ -2,15 +2,24 @@ import { useEffect } from 'react'
 import ClientDetails from './../components/ClientDetails'
 import ClientForm from './../components/ClientForm'
 import { useClientContext } from './../hooks/useClientContext'
+import { useLayoutContext } from './../hooks/useLayoutContext'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // import { toast, ToastContainer } from "react-toastify";
 import Cookies from 'universal-cookie';
 
 function Home() {
+    const {dispatchLayout} = useLayoutContext()
     const {clients, dispatch} = useClientContext()
     const navigate = useNavigate();
     const cookies = new Cookies();
+
+    useEffect(() => {
+        dispatchLayout({
+            type: 'SET_NAVBAR',
+            payload: true
+        })
+    }, [dispatchLayout])
 
     useEffect(() => {
         const verifyUser = async () => {
@@ -24,9 +33,10 @@ function Home() {
                 withCredentials: true,
                 }
             );
+            console.log(data)
             if (!data.status) {
-                cookies.remove('jwt', { path: '/' })
-                navigate("/login");
+                // cookies.remove('jwt', { path: '/', secure: false })
+                // navigate("/login");
             } else
                 // toast(`Hi ${data.user} 🦄`, {
                 //     theme: "dark",

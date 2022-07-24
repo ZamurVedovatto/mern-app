@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Cookies from 'universal-cookie';
 import { useNavigate } from "react-router-dom";
+import { Button } from 'react-bootstrap'
 
 function Navbar() {
     const [userLogged, setUserLogged] = useState(false)
@@ -30,7 +31,7 @@ function Navbar() {
                     <h1>Controle de Filas</h1>
                 </Link>
                 { userLogged && 
-                    <button onClick={logOut}>Log out</button>
+                    <Button onClick={logOut}>Log out</Button>
                 }
             </div>
         </header>

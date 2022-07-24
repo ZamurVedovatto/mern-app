@@ -8,6 +8,10 @@ export const clientsReducer = (state, action) => {
             return {
                 clients: action.payload
             }
+        case 'SET_CLIENT':
+            return {
+                client: action.payload
+            }
         case 'CREATE_CLIENT':
             return {
                 clients: [action.payload, ...state.clients]
@@ -24,7 +28,8 @@ export const clientsReducer = (state, action) => {
 
 export const ClientContextProvider = ({children}) => {
     const [state, dispatch] = useReducer(clientsReducer, {
-        clients: null
+        clients: null,
+        client: null
     })
 
     return (

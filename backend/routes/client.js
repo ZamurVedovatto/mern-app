@@ -4,6 +4,7 @@ const router = express.Router()
 const {
     getAll,
     getOne,
+    getById,
     postOne,
     deleteOne,
     editOne
@@ -11,6 +12,7 @@ const {
 
 router.get('/', getAll)
 router.get('/one', getOne)
+router.get('/:id', getById)
 router.post('/', postOne)
 router.delete('/:id', deleteOne)
 router.patch('/:id', editOne)

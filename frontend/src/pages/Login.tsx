@@ -31,13 +31,13 @@ function Login() {
         { withCredentials: true }
       );
       if (data) {
-        console.log(data)
         if (data.errors) {
           const { email, password } = data.errors;
           if (email) generateError(email);
           else if (password) generateError(password);
         } else {
-          cookies.set('jwt', data.jwt, { path: '/' });
+          console.log(data)
+          cookies.set('jwt', data.token, { path: '/', secure: false });
           navigate("/");
         }
       }

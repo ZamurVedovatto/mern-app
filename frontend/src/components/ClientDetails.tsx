@@ -1,5 +1,6 @@
 import { useClientContext } from './../hooks/useClientContext'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import QRCode from "react-qr-code";
 
 function ClientDetails({ client }) {
     const { dispatch } = useClientContext()
@@ -24,6 +25,7 @@ function ClientDetails({ client }) {
             <p><strong>Email: </strong>{client.email}</p>
             <p>{formatDistanceToNow(new Date(client.createdAt), { addSuffix: true })}</p>
             <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
+            <QRCode value={`http://127.0.0.1:5173/client/${client._id}`} />
         </div>
     )
 }
