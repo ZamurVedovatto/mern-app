@@ -22,7 +22,7 @@ const HomeContainer = styled.section `
     .tabs-lists {
         border-bottom: none;
         .nav-link {
-            color: #010101ba;
+            color: #f1f1f18c;
             &.active {
                 color: #010101;
             }

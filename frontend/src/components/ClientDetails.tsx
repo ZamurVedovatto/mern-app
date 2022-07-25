@@ -82,7 +82,6 @@ const DetailsContainer = styled.div`
     }
 `
 
-
 function ClientDetails({ client, position }) {
     const { dispatch } = useClientContext()
     const [show, setShow] = useState(false);
@@ -157,7 +156,7 @@ function ClientDetails({ client, position }) {
                             <span className="client-email">{client.email}</span>
                         </div>
                         <div className="details-bottom">
-                            <span>{formatDistanceToNow(new Date(client.createdAt), { addSuffix: true, locale: pt })}</span>
+                            <span>{formatDistanceToNow(new Date(client.createdAt), { addSuffix: true, locale: pt, includeSeconds: true })}</span>
                         </div>
                     </div>
                     <div className="details-actions">
