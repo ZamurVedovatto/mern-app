@@ -45,7 +45,7 @@ function Home() {
             }
         };
         verifyUser();
-    }, [cookies, navigate ]);
+    }, []);
 
     useEffect(() => {
         const fetchClients = async () => {
@@ -59,6 +59,10 @@ function Home() {
             }
         }
         fetchClients()
+        setInterval(() => {
+            console.log('entered')
+            fetchClients()
+        }, 1000 * 60);
     }, [dispatch])
     
     return (

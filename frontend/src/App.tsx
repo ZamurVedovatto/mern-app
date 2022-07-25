@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
 import "react-toastify/dist/ReactToastify.css";
 
@@ -12,20 +12,34 @@ import Navbar from './components/Navbar'
 // contexts
 import { useLayoutContext } from './hooks/useLayoutContext'
 
-import { initiateSocketConnection, disconnectSocket, subscribeToChat } from './services/socketio.service'
+import { initiateSocketConnection, disconnectSocket, subscribeToChat, subscribeToTimer } from './services/socketio.service'
 
 function App() {
+  const [timeStamp, setTimeStamp] = useState(0)
   const {showNabar} = useLayoutContext()
 
   useEffect(() => {
     initiateSocketConnection();
+    return () => {
+      initiateSocketConnection()
+      disconnectSocket()
+    }
+  }, []);
+
+  const onTest = () => {
     subscribeToChat((err, data) => {
       console.log(data);
     });
+  }
+
+  useEffect(() => {
+    subscribeToTimer((err, timestamp) => {
+      setTimeStamp(timestamp)
+    })
     return () => {
-      disconnectSocket();
+      subscribeToTimer()
     }
-  }, []);
+  }, [])
 
   return (
     <div>
@@ -34,6 +48,8 @@ function App() {
           showNabar && <Navbar />
         } */}
         <Navbar />
+        <p>{timeStamp} aa</p>
+        <button onClick={() => onTest()}>testing</button>
         <div className="pages">
           <Routes>
             <Route path="/login" exact element={<Login />} />

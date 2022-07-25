@@ -14,9 +14,14 @@ export const disconnectSocket = () => {
 }
 
 export const subscribeToChat = (cb) => {
-	socket.emit('my message', 'Hello there from React.')
-
+    socket.emit('my message', 'Hello there from React.')
     socket.on('my broadcast', msg => {
-            return cb(null, msg)
+        return cb(null, msg)
     })
+}
+
+
+export const subscribeToTimer = (cb) => {
+    socket.on('timer', timestamp => cb(null, timestamp));
+    socket.emit('subscribeToTimer', 5000);
 }

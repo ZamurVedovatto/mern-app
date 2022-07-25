@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Cookies from 'universal-cookie';
 import { useNavigate } from "react-router-dom";
-import { Button } from 'react-bootstrap'
+import { Container, Navbar as NavbarBs, Button } from 'react-bootstrap'
 
 function Navbar() {
     const [userLogged, setUserLogged] = useState(false)
@@ -25,16 +25,32 @@ function Navbar() {
         navigate("/login");
     };
     return (
-        <header>
-            <div className="container">
-                <Link to="/">
-                    <h1>Controle de Filas</h1>
-                </Link>
-                { userLogged && 
-                    <Button onClick={logOut}>Log out</Button>
-                }
-            </div>
-        </header>
+        <NavbarBs bg="dark" variant="dark">
+            <Container>
+            <NavbarBs.Brand href="#home">
+                <img
+                alt=""
+                src="/logo.png"
+                width="auto"
+                height="30"
+                className="d-inline-block align-top"
+                />
+            </NavbarBs.Brand>
+            { userLogged && 
+                <Button onClick={logOut}>Log out</Button>
+            }
+            </Container>
+        </NavbarBs>
+        // <header>
+        //     <div className="container">
+        //         <Link to="/">
+        //             <h1>Controle de Filas</h1>
+        //         </Link>
+        //         { userLogged && 
+        //             <Button onClick={logOut}>Log out</Button>
+        //         }
+        //     </div>
+        // </header>
     )
 }
 

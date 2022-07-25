@@ -32,6 +32,13 @@ io.on('connection', (socket) => {
     socket.on('my message', (msg) => {
         io.emit('my broadcast', `server: ${msg}`);
     });
+
+    socket.on('subscribeToTimer', (interval) => {
+        console.log('client is subscribing to timer with interval ', interval);
+        setInterval(() => {
+            io.emit('timer', new Date());
+        }, interval);
+    });
     
 });
 
