@@ -8,11 +8,16 @@ import ClientQueue from './pages/ClientQueue'
 import Home from './pages/Home'
 import Navbar from './components/Navbar'
 
+import { useLayoutContext } from './hooks/useLayoutContext'
+
 function App() {
+  const { showNavbar } = useLayoutContext();
   return (
     <div>
       <BrowserRouter>
-        <Navbar />
+        {
+          showNavbar && <Navbar />
+        }
         <div>
           <Routes>
             <Route path="/login" exact element={<Login />} />

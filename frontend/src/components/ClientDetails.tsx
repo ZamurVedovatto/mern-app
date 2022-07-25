@@ -9,15 +9,17 @@ import { confirmAlert } from 'react-confirm-alert';
 
 const DetailsContainer = styled.div`
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
     justify-content: space-between;
 
     .details-info {
         display: flex;
+        flex-wrap: wrap;
         flex-direction: column;
-        width: 100%;
         .details-top {
             display: flex;
+            flex-wrap: wrap;
             align-items: baseline;
             width: 100%;
             span {
@@ -28,13 +30,20 @@ const DetailsContainer = styled.div`
                     opacity: .75;
                 }
                 &.client-name {
-                    font-size: 1.1rem;
+                    font-size: 1rem;
+                    font-weight: 800;
                     text-transform: uppercase;
+                    max-width: 310px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    color: #444443;
                 }
             }
         }
         .details-middle {
             display: flex;
+            flex-wrap: wrap;
             width: 100%;
             color: #929292;
             span {
@@ -47,6 +56,7 @@ const DetailsContainer = styled.div`
         }
         .details-bottom {
             display: flex;
+            flex-wrap: wrap;
             width: 100%;
             span {
 
