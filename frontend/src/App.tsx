@@ -9,47 +9,11 @@ import ClientQueue from './pages/ClientQueue'
 import Home from './pages/Home'
 import Navbar from './components/Navbar'
 
-// contexts
-import { useLayoutContext } from './hooks/useLayoutContext'
-
-import { initiateSocketConnection, disconnectSocket, subscribeToChat, subscribeToTimer } from './services/socketio.service'
-
 function App() {
-  const [timeStamp, setTimeStamp] = useState(0)
-  const {showNabar} = useLayoutContext()
-
-  useEffect(() => {
-    initiateSocketConnection();
-    return () => {
-      initiateSocketConnection()
-      disconnectSocket()
-    }
-  }, []);
-
-  const onTest = () => {
-    subscribeToChat((err, data) => {
-      console.log(data);
-    });
-  }
-
-  useEffect(() => {
-    subscribeToTimer((err, timestamp) => {
-      setTimeStamp(timestamp)
-    })
-    return () => {
-      subscribeToTimer()
-    }
-  }, [])
-
   return (
     <div>
       <BrowserRouter>
-        {/* {
-          showNabar && <Navbar />
-        } */}
         <Navbar />
-        <p>{timeStamp} aa</p>
-        <button onClick={() => onTest()}>testing</button>
         <div className="pages">
           <Routes>
             <Route path="/login" exact element={<Login />} />

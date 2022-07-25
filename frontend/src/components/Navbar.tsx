@@ -24,6 +24,7 @@ function Navbar() {
         cookies.remove('jwt', { path: '/' })
         navigate("/login");
     };
+
     return (
         <NavbarBs bg="dark" variant="dark">
             <Container>
@@ -37,20 +38,10 @@ function Navbar() {
                 />
             </NavbarBs.Brand>
             { userLogged && 
-                <Button onClick={logOut}>Log out</Button>
+                <Button variant="outline-light" size="sm" onClick={logOut}>Sair</Button>
             }
             </Container>
         </NavbarBs>
-        // <header>
-        //     <div className="container">
-        //         <Link to="/">
-        //             <h1>Controle de Filas</h1>
-        //         </Link>
-        //         { userLogged && 
-        //             <Button onClick={logOut}>Log out</Button>
-        //         }
-        //     </div>
-        // </header>
     )
 }
 
