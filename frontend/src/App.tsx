@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,8 +12,20 @@ import Navbar from './components/Navbar'
 // contexts
 import { useLayoutContext } from './hooks/useLayoutContext'
 
+import { initiateSocketConnection, disconnectSocket, subscribeToChat } from './services/socketio.service'
+
 function App() {
   const {showNabar} = useLayoutContext()
+
+  useEffect(() => {
+    initiateSocketConnection();
+    subscribeToChat((err, data) => {
+      console.log(data);
+    });
+    return () => {
+      disconnectSocket();
+    }
+  }, []);
 
   return (
     <div>

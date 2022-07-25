@@ -3,6 +3,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const cookieParser = require("cookie-parser");
+const http = require('http');
+
 
 const PORT = process.env.PORT
 const MONGO_URI = process.env.MONGO_URI
@@ -13,6 +15,25 @@ const clientRoutes = require('./routes/client')
 
 // express app
 const app = express()
+const server = http.createServer(app)
+const io = require('socket.io')(server, {
+    cors: {
+        origins: ['http://127.0.0.1:5173']
+    }
+});
+
+io.on('connection', (socket) => {
+    console.log('a user connected');
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+
+    socket.on('my message', (msg) => {
+        io.emit('my broadcast', `server: ${msg}`);
+    });
+    
+});
 
 // connect do db
 mongoose.connect(MONGO_URI, {
@@ -21,9 +42,12 @@ mongoose.connect(MONGO_URI, {
     })
     .then(() => {
         // listen for requests
-        app.listen(PORT, () => {
+        // app.listen(PORT, () => {
+        //     console.log(`connected to db & app running in port ${PORT}`)
+        // })
+        server.listen(PORT, () => {
             console.log(`connected to db & app running in port ${PORT}`)
-        })
+        });
     })
     .catch((error) => {
         console.log(errir)
