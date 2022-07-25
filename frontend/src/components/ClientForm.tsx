@@ -3,6 +3,8 @@ import { useClientContext } from './../hooks/useClientContext'
 import { Form, Button, Card } from 'react-bootstrap'
 import styled from 'styled-components'
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const ClientFormContainer = styled.div`
     margin-top: 2.5rem;
 `
@@ -20,7 +22,7 @@ function ClientForm() {
         e.preventDefault()
         const client = { email, whatsapp, name }
 
-        const resp = await fetch('http://localhost:3000/api/client', {
+        const resp = await fetch(`${API_URL}/client/`, {
             method: 'POST',
             body: JSON.stringify(client),
             headers: {
@@ -49,7 +51,7 @@ function ClientForm() {
     }
 
     const fetchClients = async () => {
-        const resp = await fetch('http://localhost:3000/api/client')
+        const resp = await fetch(`${API_URL}/client/`)
         const json = await resp.json()
         if(resp.ok) {
             dispatch({

@@ -7,6 +7,8 @@ import styled from 'styled-components'
 import { ListGroup, Button, Modal } from 'react-bootstrap'
 import { confirmAlert } from 'react-confirm-alert'; 
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const DetailsContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
@@ -128,7 +130,7 @@ function ClientDetails({ client, position }) {
     }
 
     const onRemoveClient = async () => {
-        const resp = await fetch('http://localhost:3000/api/client/' + client._id, {
+        const resp = await fetch(`${API_URL}/client/` + client._id, {
             method: 'DELETE'
         })
         const json = await resp.json()

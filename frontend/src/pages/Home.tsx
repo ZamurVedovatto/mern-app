@@ -9,6 +9,8 @@ import Cookies from 'universal-cookie'
 import styled from 'styled-components'
 import { Container, Row, Col, ListGroup, Tabs, Tab } from 'react-bootstrap'
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const HomeContainer = styled.section `
     background-color: #f1f1f1;
     padding: 1rem;
@@ -51,7 +53,7 @@ function Home() {
                 navigate("/login")
             } else {
             const { data } = await axios.post(
-                    "http://localhost:3000/api/auth/",
+                    `${API_URL}/auth/`,
                     {},
                     {
                         withCredentials: true,
@@ -64,7 +66,7 @@ function Home() {
 
     useEffect(() => {
         const fetchClients = async () => {
-            const resp = await fetch('http://localhost:3000/api/client')
+            const resp = await fetch(`${API_URL}/client/`)
             const json = await resp.json()
             if(resp.ok) {
                 dispatch({
@@ -98,7 +100,7 @@ function Home() {
                                     {!clients?.length && <p>Nenhum cliente.</p>}
                                 </ListGroup>
                             </Tab>
-                            <Tab eventKey="atendidos" title="Atendidos">
+                            <Tab eventKey="atendidos" title="Atendidos" disabled>
                                 <span>atendidos</span>
                             </Tab>
                         </Tabs>

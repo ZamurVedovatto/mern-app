@@ -5,6 +5,8 @@ import { useClientContext } from './../hooks/useClientContext'
 import { useLayoutContext } from './../hooks/useLayoutContext'
 import styled from 'styled-components'
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const ClientQueueContainer = styled.div`
     height: 100vh;
     min-height: 100vh;
@@ -42,7 +44,7 @@ function ClientQueue() {
         const onGetParams = async () => {
             let paramId = searchParams.get("id")
 
-            const resp = await fetch(`http://localhost:3000/api/client/${paramId}`)
+            const resp = await fetch(`${API_URL}/client/${paramId}`)
             const json = await resp.json()
             if(resp.ok) {
                 dispatch({
@@ -59,7 +61,7 @@ function ClientQueue() {
         const fetchClients = async () => {
             let paramId = searchParams.get("id")
 
-            const resp = await fetch('http://localhost:3000/api/client')
+            const resp = await fetch(`${API_URL}/client/`)
             const json = await resp.json()
 
             let position = json.findIndex(client => client._id === paramId) + 1;
@@ -79,20 +81,6 @@ function ClientQueue() {
             payload: false
         })
     }, [dispatchLayout])
-    
-    // useEffect(() => {
-    //     const fetchClient = async () => {
-    //         const resp = await fetch('http://localhost:3000/api/client/id:', searchParams.get("id"))
-    //         const json = await resp.json()
-    //         if(resp.ok) {
-    //             dispatch({
-    //                 type: 'SET_CLIENT',
-    //                 payload: json
-    //             })
-    //         }
-    //     }
-    //     fetchClient()
-    // }, [searchParams, dispatch])
 
     return (
         <ClientQueueContainer>

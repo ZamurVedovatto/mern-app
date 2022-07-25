@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from 'universal-cookie';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Login() {
   // const [cookies] = useCookies([]);
   const cookies = new Cookies();
@@ -14,15 +16,17 @@ function Login() {
   }, [cookies, navigate]);
 
   const [values, setValues] = useState({ email: "", password: "" });
-  const generateError = (error) =>
-    toast.error(error, {
-      position: "bottom-right",
-    });
+  const generateError = (error) => {
+    // toast.error(error, {
+    //   position: "bottom-right",
+    // });
+
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        `${API_URL}/auth/login`,
         {
           ...values,
         },
@@ -74,7 +78,7 @@ function Login() {
           Don't have an account ?<Link to="/signup"> Register </Link>
         </span>
       </form>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 }
