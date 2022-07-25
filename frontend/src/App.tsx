@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
-import "react-toastify/dist/ReactToastify.css";
 
 // pages & components
 import Login from './pages/Login'
@@ -14,7 +13,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Navbar />
-        <div className="pages">
+        <div>
           <Routes>
             <Route path="/login" exact element={<Login />} />
             <Route path="/signup" exact element={<Signup />} />

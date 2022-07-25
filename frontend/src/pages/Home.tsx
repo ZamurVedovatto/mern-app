@@ -3,16 +3,23 @@ import ClientDetails from './../components/ClientDetails'
 import ClientForm from './../components/ClientForm'
 import { useClientContext } from './../hooks/useClientContext'
 import { useLayoutContext } from './../hooks/useLayoutContext'
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-// import { toast, ToastContainer } from "react-toastify";
-import Cookies from 'universal-cookie';
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
+import Cookies from 'universal-cookie'
+import styled from 'styled-components'
+import { Container, Row, Col, ListGroup } from 'react-bootstrap'
+
+const HomeContainer = styled.section `
+    background-color: #f1f1f1;
+    padding: 1rem;
+    min-height: calc(100vh - 56px);
+`
 
 function Home() {
     const {dispatchLayout} = useLayoutContext()
     const {clients, dispatch} = useClientContext()
-    const navigate = useNavigate();
-    const cookies = new Cookies();
+    const navigate = useNavigate()
+    const cookies = new Cookies()
 
     useEffect(() => {
         dispatchLayout({
@@ -24,28 +31,19 @@ function Home() {
     useEffect(() => {
         const verifyUser = async () => {
             if (!cookies.get('jwt')) {
-                navigate("/login");
+                navigate("/login")
             } else {
             const { data } = await axios.post(
-                "http://localhost:3000/api/auth/",
-                {},
-                {
-                withCredentials: true,
-                }
-            );
-            console.log(data)
-            if (!data.status) {
-                // cookies.remove('jwt', { path: '/', secure: false })
-                // navigate("/login");
-            } else
-                // toast(`Hi ${data.user} 🦄`, {
-                //     theme: "dark",
-                // });
-                console.log(data.user)
+                    "http://localhost:3000/api/auth/",
+                    {},
+                    {
+                        withCredentials: true,
+                    }
+                )
             }
-        };
-        verifyUser();
-    }, []);
+        }
+        verifyUser()
+    }, [])
 
     useEffect(() => {
         const fetchClients = async () => {
@@ -60,24 +58,29 @@ function Home() {
         }
         fetchClients()
         setInterval(() => {
-            console.log('entered')
+            console.log('fetchClients')
             fetchClients()
-        }, 1000 * 60);
+        }, 1000 * 60)
     }, [dispatch])
     
     return (
-        <>
-            <div className="home">
-                <div className="clients">
-                    {clients && clients.map((client, index) => (
-                        <ClientDetails key={client._id} client={client} />
-                        ))}
-                    {!clients?.length && <p>Nenhum cliente.</p>}
-                </div>
-                <ClientForm />
-            </div>
-            {/* <ToastContainer /> */}
-        </>
+        <HomeContainer>
+            <Container>
+                <Row>
+                    <Col sm={12} md={8}>
+                        <ListGroup>
+                            {clients && clients.map((client, index) => (
+                                <ClientDetails key={client._id} client={client} position={index+1} />
+                                ))}
+                            {!clients?.length && <p>Nenhum cliente.</p>}
+                        </ListGroup>
+                    </Col>
+                    <Col sm={12} md={4}>
+                        <ClientForm />
+                    </Col>
+                </Row>
+            </Container>
+        </HomeContainer>
     )
 }
 
