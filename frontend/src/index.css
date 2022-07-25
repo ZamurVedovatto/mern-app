@@ -11,3 +11,27 @@ body {
   margin: 0;
   font-family: "Poppins";
 }
+
+.overlay-custom-dialog {
+  font-size: 1rem;
+}
+.overlay-custom-dialog h1 {
+  text-align: center;
+  font-size: 1.2rem;
+}
+.overlay-custom-dialog .react-confirm-alert-button-group {
+  display: flex;
+  justify-content: space-between;
+}
+.overlay-custom-dialog .react-confirm-alert-button-group button {
+  font-size: 1.2rem;
+  padding: 1rem;
+}
+.overlay-custom-dialog .react-confirm-alert-button-group button:first-child {
+  width: 70%
+}
+.overlay-custom-dialog .react-confirm-alert-button-group button:last-child {
+  background-color: transparent;
+  color: #343434;
+  border: 1px solid #343434;
+}

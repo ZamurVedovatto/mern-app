@@ -7,12 +7,29 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import Cookies from 'universal-cookie'
 import styled from 'styled-components'
-import { Container, Row, Col, ListGroup } from 'react-bootstrap'
+import { Container, Row, Col, ListGroup, Tabs, Tab } from 'react-bootstrap'
 
 const HomeContainer = styled.section `
     background-color: #f1f1f1;
     padding: 1rem;
     min-height: calc(100vh - 56px);
+    .tabs-lists {
+        border-bottom: none;
+        .nav-link {
+            color: #010101ba;
+            &.active {
+                color: #010101;
+            }
+        }
+    }
+    .tab-content {
+        height: calc(100vh - 200px);
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+    .first-client {
+        background-color: lightgoldenrodyellow;
+    }
 `
 
 function Home() {
@@ -68,12 +85,23 @@ function Home() {
             <Container>
                 <Row>
                     <Col sm={12} md={8}>
-                        <ListGroup>
-                            {clients && clients.map((client, index) => (
-                                <ClientDetails key={client._id} client={client} position={index+1} />
-                                ))}
-                            {!clients?.length && <p>Nenhum cliente.</p>}
-                        </ListGroup>
+                        <Tabs
+                            defaultActiveKey="fila"
+                            className="tabs-lists"
+                            fill
+                            >
+                            <Tab eventKey="fila" title="Fila de Espera">
+                                <ListGroup>
+                                    {clients && clients.map((client, index) => (
+                                        <ClientDetails key={client._id} client={client} position={index+1} />
+                                        ))}
+                                    {!clients?.length && <p>Nenhum cliente.</p>}
+                                </ListGroup>
+                            </Tab>
+                            <Tab eventKey="atendidos" title="Atendidos">
+                                <span>atendidos</span>
+                            </Tab>
+                        </Tabs>
                     </Col>
                     <Col sm={12} md={4}>
                         <ClientForm />

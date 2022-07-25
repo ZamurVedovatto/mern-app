@@ -12,3 +12,5 @@ https://github.com/deepinder10/socketio-example
 - ação de limpar toda a fila
 - botão 'atendimento realizado', para enviar cliente para fila de atendidos
 - botão 'excluir', para enviar cliente para fila de excluídos
+- responsividade
+- deploy

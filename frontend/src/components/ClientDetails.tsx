@@ -5,6 +5,7 @@ import { pt } from 'date-fns/locale'
 import QRCode from "react-qr-code";
 import styled from 'styled-components'
 import { ListGroup, Button, Modal } from 'react-bootstrap'
+import { confirmAlert } from 'react-confirm-alert'; 
 
 const DetailsContainer = styled.div`
     display: flex;
@@ -78,6 +79,44 @@ function ClientDetails({ client, position }) {
     
     const handleShow = () => setShow(true);
 
+    const onConfirmRemove = () => {
+        confirmAlert({
+            title: 'Remover cliente da fila?',
+            buttons: [
+                {
+                    label: 'Sim',
+                    onClick: () => onRemoveClient()
+                },
+                {
+                    label: 'Não',
+                    onClick: () => console.log('cancelled')
+                }
+            ],
+            closeOnEscape: true,
+            closeOnClickOutside: false,
+            overlayClassName: "overlay-custom-dialog"
+        });
+    }
+
+    const onConfirmAttend = () => {
+        confirmAlert({
+            title: 'Cliente entrou no estabelecimento?',
+            buttons: [
+                {
+                    label: 'Sim',
+                    onClick: () => onRemoveClient()
+                },
+                {
+                    label: 'Não',
+                    onClick: () => console.log('cancelled')
+                }
+            ],
+            closeOnEscape: true,
+            closeOnClickOutside: false,
+            overlayClassName: "overlay-custom-dialog"
+        });
+    }
+
     const onRemoveClient = async () => {
         const resp = await fetch('http://localhost:3000/api/client/' + client._id, {
             method: 'DELETE'
@@ -93,7 +132,7 @@ function ClientDetails({ client, position }) {
 
     return (
         <>
-            <ListGroup.Item as="li">
+            <ListGroup.Item as="li" className={position === 1 ? 'first-client': ''}>
                 <DetailsContainer>
                     
                     <div className="details-info">
@@ -111,26 +150,23 @@ function ClientDetails({ client, position }) {
                     </div>
                     <div className="details-actions">
                         <span className="material-symbols-outlined" onClick={handleShow}>qr_code</span>
-                        <span className="material-symbols-outlined" onClick={onRemoveClient}>delete</span>
-                        <span className="material-symbols-outlined" onClick={onRemoveClient}>thumb_up</span>
+                        <span className="material-symbols-outlined" onClick={onConfirmRemove}>delete</span>
+                        <span className="material-symbols-outlined" onClick={onConfirmAttend}>thumb_up</span>
                     </div>
 
                 </DetailsContainer>
             </ListGroup.Item>
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose} centered size="lg">
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>{client.name}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className="d-flex justify-content-center align-items-center p-4">
                     <QRCode value={`http://127.0.0.1:5173/client/${client._id}`} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
+                        Fechar
                     </Button>
                 </Modal.Footer>
             </Modal>
