@@ -8,6 +8,7 @@ const http = require('http');
 
 const PORT = process.env.PORT
 const MONGO_URI = process.env.MONGO_URI
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN
 
 const authRoutes = require('./routes/auth')
 const workoutRoutes = require('./routes/workouts')
@@ -18,7 +19,7 @@ const app = express()
 const server = http.createServer(app)
 const io = require('socket.io')(server, {
     cors: {
-        origins: ['http://127.0.0.1:5173']
+        origins: [ALLOWED_ORIGIN]
     }
 });
 
