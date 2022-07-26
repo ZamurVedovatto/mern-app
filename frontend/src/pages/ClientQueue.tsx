@@ -15,7 +15,7 @@ const ClientQueueContainer = styled.div`
     width: 100%;
     .card {
         height: 100%;
-        background-image: url('./../../public/home.jpeg');
+        background-image: url('https://www.cervejariaodin.com.br/assets/img/home.jpg');
         background-repeat: no-repeat;
         background-position: center center;
         background-size: cover;

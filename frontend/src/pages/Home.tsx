@@ -13,7 +13,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 const HomeContainer = styled.section `
     background-color: #f1f1f1;
-    background-image: url('./../../public/home.jpeg');
+    background-image: url('home.jpeg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;

@@ -7,7 +7,7 @@ export const AuthContainer = styled.section`
     width: 100vw;
     height: calc(100vh - 56px);
     background-color: #f1f1f1;
-    background-image: url('./../../public/home.jpeg');
+    background-image: url('home.jpeg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
