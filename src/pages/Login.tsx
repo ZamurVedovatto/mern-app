@@ -39,7 +39,7 @@ function Login() {
           if (email) generateError(email);
           else if (password) generateError(password);
         } else {
-          console.log(data)
+          console.log(data.status)
           cookies.set('jwt', data.token, { path: '/', secure: false });
           navigate("/");
         }
