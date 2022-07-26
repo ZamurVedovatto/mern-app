@@ -11,7 +11,8 @@ import Navbar from './components/Navbar'
 import { useLayoutContext } from './hooks/useLayoutContext'
 
 function App() {
-  const { showNavbar } = useLayoutContext();
+  const { state } = useLayoutContext();
+  const { showNavbar } = state;
   return (
     <div>
       <BrowserRouter>
@@ -20,10 +21,10 @@ function App() {
         }
         <div>
           <Routes>
-            <Route path="/login" exact element={<Login />} />
-            <Route path="/signup123" exact element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup123" element={<Signup />} />
             <Route path="/client"  element={<ClientQueue />} />
-            <Route path="/" exact element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </div>

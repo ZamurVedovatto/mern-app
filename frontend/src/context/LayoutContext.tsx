@@ -1,8 +1,22 @@
 import { createContext, useReducer } from 'react'
 
-export const LayoutContext = createContext()
+type InitialStateType = {
+    showNavbar: boolean;
+}
 
-export const layoutReducer = (state, action) => {
+const initialState = {
+    showNavbar: true
+}
+
+export const LayoutContext = createContext<{
+        state: InitialStateType;
+        dispatchLayout: React.Dispatch<any>;
+    }>({
+        state: initialState,
+        dispatchLayout: () => null
+});
+
+export const layoutReducer = (state:InitialStateType, action:any) => {
     switch (action.type) {
         case 'SET_NAVBAR':
             return {
@@ -13,13 +27,11 @@ export const layoutReducer = (state, action) => {
     }
 }
 
-export const LayoutContextProvider = ({children}) => {
-    const [state, dispatchLayout] = useReducer(layoutReducer, {
-        showNavbar: true,
-    })
+export const LayoutContextProvider = ({children}: {children: React.ReactNode}) => {
+    const [state, dispatchLayout] = useReducer(layoutReducer, initialState)
 
     return (
-        <LayoutContext.Provider value={{ ...state, dispatchLayout }}>
+        <LayoutContext.Provider value={{state, dispatchLayout }}>
             {children}
         </LayoutContext.Provider>
     )

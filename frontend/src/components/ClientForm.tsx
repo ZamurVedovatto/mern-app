@@ -8,7 +8,6 @@ const API_URL = import.meta.env.VITE_API_URL;
 const ClientFormContainer = styled.div`
     margin-top: 2.5rem;
 `
-
 function ClientForm() {
     const { dispatch } = useClientContext()
 
@@ -16,9 +15,9 @@ function ClientForm() {
     const [whatsapp, setWhatsapp] = useState('')
     const [email, setEmail] = useState('')
     const [error, setError] = useState(null)
-    const [emptyFields, setEmptyFields] = useState([])
+    const [emptyFields, setEmptyFields] = useState<string[]>([]);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e:any) => {
         e.preventDefault()
         const client = { email, whatsapp, name }
 
@@ -40,7 +39,6 @@ function ClientForm() {
             setEmail('')
             setError(null)
             setEmptyFields([])
-            console.log('new client added', json)
             dispatch({
                 type: 'CREATE_CLIENT',
                 payload: json
@@ -61,6 +59,11 @@ function ClientForm() {
         }
     }
 
+    const onFillEmptyFields = (type:string) => {
+        if (!emptyFields.length) return false
+        return (emptyFields.indexOf(type) > -1) ? true : false
+    }
+
     return (
         <ClientFormContainer>
             <Card>
@@ -74,7 +77,7 @@ function ClientForm() {
                                 onChange={(e) => setName(e.target.value)}
                                 value={name}
                                 placeholder="Nome/identificação"
-                                className={emptyFields?.includes('name') ? 'error' : ''}
+                                className={onFillEmptyFields("name") ? 'error' : ''}
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicWhatsapp">
@@ -84,7 +87,7 @@ function ClientForm() {
                                 onChange={(e) => setWhatsapp(e.target.value)}
                                 value={whatsapp}
                                 placeholder="5531988776655"
-                                className={emptyFields?.includes('whatsapp') ? 'error' : ''}
+                                className={onFillEmptyFields("whatsapp") ? 'error' : ''}
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -94,7 +97,7 @@ function ClientForm() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 value={email}
                                 placeholder="email@email.com"
-                                className={emptyFields?.includes('email') ? 'error' : ''}
+                                className={onFillEmptyFields("email") ? 'error' : ''}
                             />
                         </Form.Group>
                         <Button variant="primary" type="submit">Adicionar</Button>

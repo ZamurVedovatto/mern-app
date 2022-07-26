@@ -16,12 +16,12 @@ function Register() {
   }, [cookies, navigate]);
 
   const [values, setValues] = useState({ email: "", password: "" });
-  const generateError = (error) => {
+  const generateError = (error:any) => {
     // toast.error(error, {
     //   position: "bottom-right",
     // });
   }
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event:any) => {
     event.preventDefault();
     try {
       const { data } = await axios.post(

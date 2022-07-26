@@ -53,7 +53,6 @@ const ClientQueueContainer = styled.div`
                 }
             }
             .card-text {
-                margin-top: 2rem;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -72,7 +71,9 @@ const ClientQueueContainer = styled.div`
 `
 
 function ClientQueue() {
-    const {client, clients, dispatch} = useClientContext()
+    const {state, dispatch} = useClientContext()
+    const {client, clients} = state
+
     const {dispatchLayout} = useLayoutContext()
     const [searchParams, setSearchParams] = useSearchParams();
     const [position, setPosition] = useState(1)
@@ -101,7 +102,7 @@ function ClientQueue() {
             const resp = await fetch(`${API_URL}/client/`)
             const json = await resp.json()
 
-            let position = json.findIndex(client => client._id === paramId) + 1;
+            let position = json.findIndex((client:any) => client._id === paramId) + 1;
             console.log(position)
             setPosition(position)
         }

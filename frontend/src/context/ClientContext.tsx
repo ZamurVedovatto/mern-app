@@ -1,8 +1,38 @@
 import { createContext, useReducer } from 'react'
 
-export const ClientContext = createContext()
+type ClientType = {
+    _id: string;
+    name: string;
+    email: string;
+    whatsapp: string;
+}
 
-export const clientsReducer = (state, action) => {
+type InitialStateType = {
+    clients?: any,
+    client?: ClientType,
+}
+
+const initialState = {
+    clients: null,
+    client: {
+        _id: "",
+        name: "",
+        email: "",
+        whatsapp: ""
+    }
+}
+
+export const ClientContext = createContext<{
+        state: InitialStateType;
+        dispatch: React.Dispatch<any>;
+    }>({
+        state: initialState,
+        dispatch: () => null
+});
+
+
+
+export const clientsReducer = (state:InitialStateType, action:any) => {
     switch (action.type) {
         case 'SET_CLIENTS':
             return {
@@ -18,7 +48,7 @@ export const clientsReducer = (state, action) => {
             }
         case 'DELETE_CLIENT':
             return { 
-                clients: state.clients.filter(w => w._id !== action.payload._id) 
+                clients: state.clients.filter((client:ClientType) => client._id !== action.payload._id) 
             }
 
         default:
@@ -26,14 +56,11 @@ export const clientsReducer = (state, action) => {
     }
 }
 
-export const ClientContextProvider = ({children}) => {
-    const [state, dispatch] = useReducer(clientsReducer, {
-        clients: null,
-        client: null
-    })
+export const ClientContextProvider = ({children}: {children: React.ReactNode}) => {
+    const [state, dispatch] = useReducer(clientsReducer, initialState)
 
     return (
-        <ClientContext.Provider value={{ ...state, dispatch }}>
+        <ClientContext.Provider value={{state, dispatch }}>
             {children}
         </ClientContext.Provider>
     )

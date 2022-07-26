@@ -44,7 +44,8 @@ io.on('connection', (socket) => {
 });
 
 // connect do db
-mongoose.connect(MONGO_URI, {
+// mongoose.connect(MONGO_URI, {
+mongoose.connect("mongodb+srv://zabove:ZVqueue123@queue-control-cluster.tdbaa.mongodb.net/?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true
     })
@@ -58,7 +59,7 @@ mongoose.connect(MONGO_URI, {
         });
     })
     .catch((error) => {
-        console.log(errir)
+        console.log(error)
     })
 
 // middlewares

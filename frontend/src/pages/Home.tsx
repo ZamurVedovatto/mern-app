@@ -32,6 +32,10 @@ const HomeContainer = styled.section `
         height: calc(100vh - 200px);
         max-height: calc(100vh - 200px);
         overflow-y: auto;
+        .empty-list {
+            padding: 1rem;
+            background-color: #FFFFFF;
+        }
     }
     .first-client {
         background-color: lightgoldenrodyellow;
@@ -40,7 +44,8 @@ const HomeContainer = styled.section `
 
 function Home() {
     const {dispatchLayout} = useLayoutContext()
-    const {clients, dispatch} = useClientContext()
+    const {state, dispatch} = useClientContext()
+    const { clients } = state;
     const navigate = useNavigate()
     const cookies = new Cookies()
 
@@ -94,14 +99,17 @@ function Home() {
                         <Tabs
                             defaultActiveKey="fila"
                             className="tabs-lists"
-                            fill
                             >
                             <Tab eventKey="fila" title="Fila de Espera">
                                 <ListGroup>
-                                    {clients && clients.map((client, index) => (
+                                    {clients && clients.map((client:any, index:number) => (
                                         <ClientDetails key={client._id} client={client} position={index+1} />
                                         ))}
-                                    {!clients?.length && <p>Nenhum cliente.</p>}
+                                    {!clients?.length && (
+                                        <div className="empty-list">
+                                            <span>Nenhum cliente.</span>
+                                        </div>
+                                    )}
                                 </ListGroup>
                             </Tab>
                             <Tab eventKey="atendidos" title="Atendidos" disabled>

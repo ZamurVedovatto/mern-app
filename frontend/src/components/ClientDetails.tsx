@@ -82,7 +82,12 @@ const DetailsContainer = styled.div`
     }
 `
 
-function ClientDetails({ client, position }) {
+interface ClientDetailsProps {
+    client: any;
+    position: number;
+}
+
+function ClientDetails({client, position}: ClientDetailsProps) {
     const { dispatch } = useClientContext()
     const [show, setShow] = useState(false);
 
