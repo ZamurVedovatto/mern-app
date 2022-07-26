@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from 'universal-cookie';
 import { AuthContainer } from './../assets/styles/AuthContainer'
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || process.env.VITE_API_URL;
 
 function Login() {
   // const [cookies] = useCookies([]);

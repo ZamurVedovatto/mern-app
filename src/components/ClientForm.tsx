@@ -3,7 +3,7 @@ import { useClientContext } from './../hooks/useClientContext'
 import { Form, Button, Card } from 'react-bootstrap'
 import styled from 'styled-components'
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || process.env.VITE_API_URL;
 
 const ClientFormContainer = styled.div`
     margin-top: 2.5rem;

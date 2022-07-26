@@ -9,7 +9,7 @@ import Cookies from 'universal-cookie'
 import styled from 'styled-components'
 import { Container, Row, Col, ListGroup, Tabs, Tab } from 'react-bootstrap'
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || process.env.VITE_API_URL;
 
 const HomeContainer = styled.section `
     background-color: #f1f1f1;
